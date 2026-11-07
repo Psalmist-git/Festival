@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}AI Analysis · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">GEMINI-POWERED REVIEW INTELLIGENCE</p>
+        <h1>AI review analysis</h1>
+
+        <p class="muted">
+            Detect sentiment, emotions, topics, and attendee complaints.
+        </p>
+    </div>
+
+</section>
+
+<section class="panel">
+
+    {% if reviews %}
+
+        <div class="review-analysis-list">
+
+            {% for review in reviews %}
+
+                {% set result = analysis_by_id.get(review.get('id')|string) %}
+
+                <article class="review-item">
+
+                    <div>
+
+                        <span class="eyebrow">
+                            {{ review.get('event', 'Festival') }}
+                            ·
+                            {{ review.get('id') }}
+                        </span>
+
+                        <p>{{ review.get('text', '') }}</p>
+
+                        {% if result %}
+
+                            <div class="analysis-result">
+
+                                <span class="badge good">
+                                    {{ result.get('sentiment', 'Analysed')|title }}
+                                </span>
+
+                                <p>
+                                    {{ result.get('summary', '') }}
+                                </p>
+
+                                <small>
+                                    Topics:
+                                    {{ result.get('topics', [])|join(', ') }}
+                                </small>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                    <form
+                        method="post"
+                        data-loading-message="Detecting the festival vibes..."
+                    >
+
+                        <input
+                            type="hidden"
+                            name="review_id"
+                            value="{{ review.get('id') }}"
+                        >
+
+                        <button class="button secondary" type="submit">
+
+                            {% if result %}
+                                Re-analyse
+                            {% else %}
+                                Analyse review
+                            {% endif %}
+
+                        </button>
+
+                    </form>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No reviews to analyse</h2>
+
+            <p>Import reviews first.</p>
+
+            <a class="button" href="{{ url_for('import_page') }}">
+                Import reviews
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

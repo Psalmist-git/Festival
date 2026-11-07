@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}VibeCheck AI{% endblock %}</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <aside class="sidebar">
+
+        <a class="brand" href="{{ url_for('dashboard') }}">
+            <span class="brand-mark">V</span>
+
+            <span>
+                VibeCheck
+                <small>AI · FESTIVAL INTELLIGENCE</small>
+            </span>
+        </a>
+
+        <nav>
+            <a href="{{ url_for('dashboard') }}">Overview</a>
+            <a href="{{ url_for('reviews_page') }}">Reviews</a>
+            <a href="{{ url_for('import_page') }}">Import reviews</a>
+            <a href="{{ url_for('analysis_page') }}">AI analysis</a>
+            <a href="{{ url_for('reports_page') }}">Intelligence reports</a>
+            <a href="{{ url_for('compare_page') }}">Compare festivals</a>
+            <a href="{{ url_for('chat_page') }}">Ask VibeCheck</a>
+        </nav>
+
+        <div class="sidebar-note">
+            Turn attendee feedback into better festival experiences.
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <span>FESTIVAL FEEDBACK DETECTIVE</span>
+            <span class="status-dot">SYSTEM READY</span>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+            {% if messages %}
+
+                <section class="flash-stack">
+
+                    {% for category, message in messages %}
+
+                        <div class="flash {{ category }}">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                </section>
+
+            {% endif %}
+
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+
+    </main>
+
+</div>
+
+<!-- Small loading indicator positioned beside the user's click -->
+<div class="loading-indicator" id="loadingIndicator">
+    <span class="mini-spinner"></span>
+    <span>Loading...</span>
+</div>
+
+<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+
+</body>
+</html>

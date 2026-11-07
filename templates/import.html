@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Import · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">BRING YOUR DATA IN</p>
+        <h1>Import festival reviews</h1>
+
+        <p class="muted">
+            Upload a CSV file containing attendee feedback.
+        </p>
+    </div>
+
+</section>
+
+<section class="panel narrow">
+
+    <h2>Upload a CSV file</h2>
+
+    <p class="muted">
+        Required columns:
+        <code>id</code>,
+        <code>event</code>,
+        <code>text</code>,
+        <code>created_at</code>.
+    </p>
+
+    <p class="muted">
+        Dates must use YYYY-MM-DD.
+        Review text must contain 5–500 characters.
+    </p>
+
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        data-loading-message="Importing and validating your reviews..."
+    >
+
+        <label for="review_file">
+            Choose CSV file
+        </label>
+
+        <input
+            id="review_file"
+            name="file"
+            type="file"
+            accept=".csv,text/csv"
+            required
+        >
+
+        <button class="button" type="submit">
+            Import reviews
+        </button>
+
+    </form>
+
+</section>
+
+{% endblock %}

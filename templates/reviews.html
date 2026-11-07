@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Reviews · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">THE VOICE OF YOUR ATTENDEES</p>
+        <h1>Festival reviews</h1>
+
+        <p class="muted">
+            Browse imported feedback and see which reviews have been analysed.
+        </p>
+    </div>
+
+    <a class="button" href="{{ url_for('import_page') }}">
+        Import reviews
+    </a>
+
+</section>
+
+<section class="metric-grid">
+
+    <article class="metric-card">
+        <span>Total reviews</span>
+        <strong>{{ reviews|length }}</strong>
+        <small>Imported feedback records</small>
+    </article>
+
+    <article class="metric-card">
+        <span>Analysed reviews</span>
+        <strong>{{ analysis_ids|length }}</strong>
+        <small>Reviews processed by AI</small>
+    </article>
+
+    <article class="metric-card">
+        <span>Pending reviews</span>
+        <strong>{{ reviews|length - analysis_ids|length }}</strong>
+        <small>Awaiting AI analysis</small>
+    </article>
+
+</section>
+
+<section class="panel table-wrap">
+
+    {% if reviews %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Review ID</th>
+                    <th>Festival</th>
+                    <th>Review</th>
+                    <th>Date</th>
+                    <th>AI status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for review in reviews %}
+
+                    <tr>
+
+                        <td>{{ review.get('id', '—') }}</td>
+
+                        <td>{{ review.get('event', '—') }}</td>
+
+                        <td>{{ review.get('text', '') }}</td>
+
+                        <td>{{ review.get('created_at', '—') }}</td>
+
+                        <td>
+
+                            {% if review.get('id')|string in analysis_ids %}
+
+                                <span class="badge good">
+                                    Analysed
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge pending">
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    {% else %}
+
+        <div class="empty-state">
+
+            <h2>No reviews yet</h2>
+
+            <p>
+                Import a CSV file to start exploring attendee feedback.
+            </p>
+
+            <a class="button" href="{{ url_for('import_page') }}">
+                Import your first reviews
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

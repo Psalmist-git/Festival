@@ -25,14 +25,34 @@ def compare_festival_data(reviews, analyses, first_event, second_event):
         if review.get("event") == second_event
     ]
 
+    first_review_ids = {
+        str(review.get("id"))
+        for review in first_reviews
+    }
+
+    second_review_ids = {
+        str(review.get("id"))
+        for review in second_reviews
+    }
+
+    first_analyses = [
+        analysis for analysis in analyses
+        if str(analysis.get("review_id")) in first_review_ids
+    ]
+
+    second_analyses = [
+        analysis for analysis in analyses
+        if str(analysis.get("review_id")) in second_review_ids
+    ]
+
     first_report = build_intelligence_report(
         first_reviews,
-        analyses
+        first_analyses,
     )
 
     second_report = build_intelligence_report(
         second_reviews,
-        analyses
+        second_analyses,
     )
 
     return {

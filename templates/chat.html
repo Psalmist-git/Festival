@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Ask VibeCheck · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">YOUR FESTIVAL FEEDBACK ASSISTANT</p>
+        <h1>Ask VibeCheck AI</h1>
+
+        <p class="muted">
+            Ask questions grounded in your imported reviews
+            and saved AI analyses.
+        </p>
+    </div>
+
+</section>
+
+
+<section class="panel narrow">
+
+    <form
+        method="post"
+        data-loading-message="VibeCheck AI is thinking..."
+    >
+
+        <label for="question">
+            What would you like to know?
+        </label>
+
+        <textarea
+            id="question"
+            name="question"
+            rows="4"
+            placeholder="What are attendees complaining about most?"
+            required
+        >{{ question }}</textarea>
+
+        <button class="button" type="submit">
+            Ask question
+        </button>
+
+    </form>
+
+
+    {% if answer %}
+
+        <div class="answer-box">
+
+            <p class="eyebrow">VIBECHECK RESPONSE</p>
+
+            <div class="answer-text">
+                {{ answer }}
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

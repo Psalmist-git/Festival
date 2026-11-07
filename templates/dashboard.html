@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Overview · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">YOUR FESTIVAL CONTROL ROOM</p>
+
+        <h1>
+            Festival intelligence,
+            <em>at a glance.</em>
+        </h1>
+
+        <p class="muted">
+            Understand what attendees love, what frustrates them,
+            and where to improve.
+        </p>
+    </div>
+
+    <a class="button" href="{{ url_for('import_page') }}">
+        + Import reviews
+    </a>
+
+</section>
+
+
+<section class="metric-grid">
+
+    <article class="metric-card">
+        <span>Total reviews</span>
+        <strong>{{ total_reviews }}</strong>
+        <small>Imported feedback records</small>
+    </article>
+
+    <article class="metric-card">
+        <span>AI analyses</span>
+        <strong>{{ total_analyses }}</strong>
+        <small>Saved review analyses</small>
+    </article>
+
+    <article class="metric-card">
+        <span>Festivals tracked</span>
+        <strong>{{ festivals|length }}</strong>
+        <small>Unique event names</small>
+    </article>
+
+    <article class="metric-card">
+        <span>Awaiting analysis</span>
+        <strong>{{ report.get('unanalyzed_reviews', 0) }}</strong>
+        <small>Reviews not yet analysed</small>
+    </article>
+
+</section>
+
+
+<section class="content-grid">
+
+    <article class="panel">
+
+        <p class="eyebrow">CUSTOMER EXPERIENCE</p>
+
+        <h2>Sentiment snapshot</h2>
+
+        {% set counts = report.get('sentiment_counts', {}) %}
+
+        <div class="sentiment-list">
+
+            {% for label in ['positive', 'neutral', 'negative'] %}
+
+                <div class="sentiment-row">
+                    <span>{{ label|title }}</span>
+                    <strong>{{ counts.get(label, 0) }}</strong>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+        <p class="muted small">
+            Based on completed AI analyses.
+        </p>
+
+    </article>
+
+
+    <article class="panel">
+
+        <p class="eyebrow">QUICK ACTIONS</p>
+
+        <h2>What would you like to do?</h2>
+
+        <div class="action-list">
+
+            <a href="{{ url_for('analysis_page') }}">
+                Analyse attendee feedback <b>→</b>
+            </a>
+
+            <a href="{{ url_for('reports_page') }}">
+                Generate intelligence report <b>→</b>
+            </a>
+
+            <a href="{{ url_for('compare_page') }}">
+                Compare festival experiences <b>→</b>
+            </a>
+
+            <a href="{{ url_for('chat_page') }}">
+                Ask questions about reviews <b>→</b>
+            </a>
+
+        </div>
+
+    </article>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}Compare · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">SIDE-BY-SIDE FESTIVAL INTELLIGENCE</p>
+        <h1>Compare festivals</h1>
+
+        <p class="muted">
+            Compare review coverage, sentiment, complaints, and performance.
+        </p>
+    </div>
+
+</section>
+
+<section class="panel narrow">
+
+    <form
+        method="post"
+        data-loading-message="Comparing festival experiences..."
+    >
+
+        <label for="first_event">First festival</label>
+
+        <select id="first_event" name="first_event" required>
+
+            {% for festival in festival_names %}
+                <option value="{{ festival }}">
+                    {{ festival }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+        <label for="second_event">Second festival</label>
+
+        <select id="second_event" name="second_event" required>
+
+            {% for festival in festival_names %}
+                <option value="{{ festival }}">
+                    {{ festival }}
+                </option>
+            {% endfor %}
+
+        </select>
+
+        <button
+            class="button"
+            type="submit"
+            {% if festival_names|length < 2 %}disabled{% endif %}
+        >
+            Compare festivals
+        </button>
+
+    </form>
+
+    {% if festival_names|length < 2 %}
+        <p class="muted">
+            At least two festivals are needed for a comparison.
+        </p>
+    {% endif %}
+
+</section>
+
+{% if comparison %}
+
+    <section class="content-grid">
+
+        {% for key, title in [
+            ('first_report', comparison.first_event),
+            ('second_report', comparison.second_event)
+        ] %}
+
+            <article class="panel">
+
+                <p class="eyebrow">FESTIVAL REPORT</p>
+
+                <h2>{{ title }}</h2>
+
+                {% set data = comparison[key] %}
+                {% set perf = data.get('performance_summary', {}) %}
+
+                <div class="sentiment-list">
+
+                    <div class="sentiment-row">
+                        <span>Total reviews</span>
+                        <strong>{{ data.get('total_reviews', 0) }}</strong>
+                    </div>
+
+                    <div class="sentiment-row">
+                        <span>Analysed</span>
+                        <strong>{{ data.get('analyzed_reviews', 0) }}</strong>
+                    </div>
+
+                    <div class="sentiment-row">
+                        <span>Sentiment index</span>
+                        <strong>
+                            {{ perf.get('sentiment_index', '—') }}/100
+                        </strong>
+                    </div>
+
+                    <div class="sentiment-row">
+                        <span>Complaint rate</span>
+                        <strong>
+                            {{ perf.get('complaint_rate', '—') }}%
+                        </strong>
+                    </div>
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </section>
+
+{% endif %}
+
+{% endblock %}

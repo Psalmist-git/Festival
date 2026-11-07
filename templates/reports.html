@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Reports · VibeCheck AI{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <p class="eyebrow">FROM FEEDBACK TO ACTION</p>
+        <h1>Festival intelligence report</h1>
+
+        <p class="muted">
+            A structured overview built from your saved review analyses.
+        </p>
+    </div>
+
+</section>
+
+
+<section class="metric-grid">
+
+    <article class="metric-card">
+        <span>Total reviews</span>
+        <strong>{{ report.get('total_reviews', 0) }}</strong>
+    </article>
+
+    <article class="metric-card">
+        <span>Analysed</span>
+        <strong>{{ report.get('analyzed_reviews', 0) }}</strong>
+    </article>
+
+    <article class="metric-card">
+        <span>Unanalysed</span>
+        <strong>{{ report.get('unanalyzed_reviews', 0) }}</strong>
+    </article>
+
+    <article class="metric-card">
+        <span>Complaint reviews</span>
+        <strong>
+            {{ report.get('performance_summary', {}).get('complaint_reviews', 0) }}
+        </strong>
+    </article>
+
+</section>
+
+
+<section class="content-grid">
+
+    <article class="panel">
+
+        <h2>Performance summary</h2>
+
+        {% set performance = report.get('performance_summary', {}) %}
+
+        <div class="sentiment-list">
+
+            <div class="sentiment-row">
+                <span>Sentiment index</span>
+                <strong>
+                    {{ performance.get('sentiment_index', '—') }}/100
+                </strong>
+            </div>
+
+            <div class="sentiment-row">
+                <span>Complaint rate</span>
+                <strong>
+                    {{ performance.get('complaint_rate', '—') }}%
+                </strong>
+            </div>
+
+            <div class="sentiment-row">
+                <span>Main concern</span>
+                <strong>
+                    {{ performance.get('main_concern', 'None') }}
+                </strong>
+            </div>
+
+        </div>
+
+    </article>
+
+
+    <article class="panel">
+
+        <h2>Management actions</h2>
+
+        {% for action in report.get('management_actions', []) %}
+
+            <div class="insight-item">
+
+                <span class="badge pending">
+                    {{ action.get('priority', 'Action') }}
+                </span>
+
+                <strong>
+                    {{ action.get('category', 'Recommendation') }}
+                </strong>
+
+                <p>{{ action.get('action', '') }}</p>
+
+            </div>
+
+        {% else %}
+
+            <p class="muted">
+                No management actions are available yet.
+                Analyse more reviews to build the report.
+            </p>
+
+        {% endfor %}
+
+    </article>
+
+</section>
+
+
+<section class="panel">
+
+    <h2>Export report</h2>
+
+    <form
+        class="inline-form"
+        action="{{ url_for('exports_page') }}"
+        method="post"
+        data-loading-message="Preparing your festival intelligence report..."
+    >
+
+        <input
+            name="filename"
+            value="vibecheck-festival-report"
+            aria-label="Filename"
+        >
+
+        <select name="format">
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+        </select>
+
+        <button class="button" type="submit">
+            Download report
+        </button>
+
+    </form>
+
+</section>
+
+{% endblock %}
