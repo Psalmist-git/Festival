@@ -1,0 +1,111 @@
+<section class="monitoring-grid">
+    <article class="panel monitor-panel">
+        <div class="panel-heading-row">
+            <div><p class="eyebrow">SIGNAL MONITOR</p><h2>Sentiment pulse</h2></div>
+            <span class="panel-tag">ANALYSED REVIEWS</span>
+        </div>
+        {% set counts = report.get('sentiment_counts', {}) %}
+        {% set total = command_centre.get('sentiment_total', 0) %}
+        {% set positive = counts.get('positive', 0) %}
+        {% set neutral = counts.get('neutral', 0) %}
+        {% set negative = counts.get('negative', 0) %}
+        {% set positive_deg = (positive / total * 360) if total else 0 %}
+        {% set neutral_deg = (neutral / total * 360) if total else 0 %}
+        {% set negative_deg = (negative / total * 360) if total else 0 %}
+        <div class="pulse-layout">
+            <div class="sentiment-donut" style="--positive-deg: {{ positive_deg }}deg; --neutral-end: {{ positive_deg + neutral_deg }}deg; --negative-end: {{ positive_deg + neutral_deg + negative_deg }}deg;">
+                <div class="donut-centre"><strong>{{ total }}</strong><span>signals</span></div>
+            </div>
+            <div class="donut-legend">
+                <div><i class="legend-positive"></i><span>Positive</span><strong>{{ positive }}</strong></div>
+                <div><i class="legend-neutral"></i><span>Neutral</span><strong>{{ neutral }}</strong></div>
+                <div><i class="legend-negative"></i><span>Negative</span><strong>{{ negative }}</strong></div>
+            </div>
+        </div>
+        <p class="muted small monitor-footnote">Distribution of completed, saved AI classifications. This is not a live feed.</p>
+    </article>
+
+    <article class="panel issue-panel">
+        <div class="panel-heading-row">
+            <div><p class="eyebrow">ISSUE MONITOR</p><h2>Recurring complaint areas</h2></div>
+            <span class="panel-tag">{{ command_centre.get('tracked_complaint_categories', 0) }} CATEGORIES</span>
+        </div>
+        {% for item in command_centre.get('complaint_monitor', []) %}
+            {% set max_count = command_centre.get('complaint_monitor', [])[0].get('count', 1) %}
+            <div class="issue-row">
+                <div class="issue-row-label"><span>{{ item.get('category', 'Other') }}</span><strong>{{ item.get('count', 0) }}</strong></div>
+                <div class="issue-track"><span style="width: {{ (item.get('count', 0) / max_count * 100) if max_count else 0 }}%"></span></div>
+                <small>{{ item.get('negative_count', 0) }} linked to negative sentiment</small>
+            </div>
+        {% else %}
+            <div class="monitor-empty">No complaint categories detected in saved analyses yet.</div>
+        {% endfor %}
+    </article>
+</section>
+
+<section class="monitoring-grid">
+    <article class="panel alert-panel">
+        <div class="panel-heading-row">
+            <div><p class="eyebrow">PRIORITY WATCH</p><h2>High-priority alerts</h2></div>
+            <span class="alert-count">{{ command_centre.get('high_priority_count', 0) }} HIGH</span>
+        </div>
+        {% for alert in command_centre.get('priority_alerts', []) %}
+            <div class="priority-alert">
+                <span class="alert-pulse"></span>
+                <div><strong>{{ alert.get('category', 'Issue') }}</strong><small>{{ alert.get('count', 0) }} complaint reviews · {{ alert.get('negative_count', 0) }} negative</small></div>
+                <span class="priority-label">HIGH</span>
+            </div>
+        {% else %}
+            <div class="monitor-empty">No categories currently meet the high-priority ranking threshold. This does not guarantee that no serious individual issue exists.</div>
+        {% endfor %}
+        <p class="muted small monitor-footnote">Priority is a frequency-based indicator, not a verified safety or emergency severity assessment.</p>
+    </article>
+
+    <article class="panel intelligence-brief">
+        <div class="panel-heading-row">
+            <div><p class="eyebrow">AI INTELLIGENCE BRIEF</p><h2>What the feedback is telling us</h2></div>
+            <span class="brief-symbol">✳</span>
+        </div>
+        <p class="brief-summary">{{ command_centre.get('intelligence_summary', '') }}</p>
+        {% if command_centre.get('latest_recommendations') %}
+            <div class="brief-recommendations">
+                <span class="brief-subtitle">LATEST SAVED RECOMMENDATIONS</span>
+                {% for item in command_centre.get('latest_recommendations', []) %}
+                    <div class="brief-recommendation"><span>{{ item.get('review_id', 'Review') }}</span><p>{{ item.get('recommendation', '') }}</p></div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </article>
+</section>
+
+<section class="panel festival-performance">
+    <div class="panel-heading-row">
+        <div><p class="eyebrow">EVENT COMPARISON</p><h2>Festival performance overview</h2><p class="muted small">Sentiment index uses positive = 1, neutral = 0.5 and negative = 0 across analysed reviews.</p></div>
+        <a class="text-link" href="{{ url_for('compare_page') }}">Detailed comparison ↗</a>
+    </div>
+    {% for festival in command_centre.get('festival_performance', []) %}
+        <div class="festival-row">
+            <div class="festival-name"><strong>{{ festival.get('event', 'Festival') }}</strong><small>{{ festival.get('analysed_reviews', 0) }} analysed</small></div>
+            <div class="festival-score"><strong>{{ festival.get('sentiment_index', 0) }}<small>/100</small></strong><div class="festival-track"><span style="width: {{ festival.get('sentiment_index', 0) }}%"></span></div></div>
+            <div class="festival-negative"><strong>{{ festival.get('negative_rate', 0) }}%</strong><small>negative</small></div>
+        </div>
+    {% else %}
+        <div class="monitor-empty">Festival performance appears here after at least one review has a saved AI analysis.</div>
+    {% endfor %}
+</section>
+
+<section class="panel complaint-activity">
+    <div class="panel-heading-row">
+        <div><p class="eyebrow">RECENT FLAGGED FEEDBACK</p><h2>Complaint activity</h2></div>
+        <a class="text-link" href="{{ url_for('reviews_page') }}">Browse reviews ↗</a>
+    </div>
+    {% for item in command_centre.get('complaint_activity', []) %}
+        <div class="activity-row">
+            <span class="activity-marker {% if item.get('sentiment') == 'negative' %}negative{% else %}neutral{% endif %}"></span>
+            <div class="activity-copy"><strong>{{ item.get('event', 'Festival') }}</strong><p>{{ item.get('complaint', '') }}</p></div>
+            <div class="activity-meta"><strong>{{ item.get('review_id', '') }}</strong><small>{{ item.get('sentiment', 'unknown')|title }}</small></div>
+        </div>
+    {% else %}
+        <div class="monitor-empty">No complaints have been flagged in saved analyses.</div>
+    {% endfor %}
+</section>
