@@ -17,6 +17,7 @@ from app.analysis_storage import load_analyses, save_analysis
 from app.ingest import import_reviews
 from app.ai.gemini import analyze_review
 from app.analytics.insights import build_intelligence_report
+from app.analytics.command_centre import build_command_centre_data
 from app.analytics.comparison import (
     get_festival_names,
     compare_festival_data,
@@ -47,6 +48,7 @@ def dashboard():
     analyses = load_analyses()
 
     report = build_intelligence_report(reviews, analyses)
+    command_centre = build_command_centre_data(reviews, analyses, report)
 
     total_reviews = len(reviews)
     total_analyses = len(analyses)
@@ -60,6 +62,7 @@ def dashboard():
         total_reviews=total_reviews,
         total_analyses=total_analyses,
         festivals=festivals,
+        command_centre=command_centre,
     )
 
 
