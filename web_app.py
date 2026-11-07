@@ -13,6 +13,9 @@ from flask import (
 from dotenv import load_dotenv
 from werkzeug.utils import secure_filename
 from app.storage import load_reviews, add_reviews
+from app.models import validate_review
+import hashlib
+import hmac
 from app.analysis_storage import load_analyses, save_analysis
 from app.ingest import import_reviews
 from app.ai.gemini import analyze_review
@@ -376,6 +379,105 @@ def exports_page():
 # --------------------------------------------------
 # Health Check
 # --------------------------------------------------
+
+# --------------------------------------------------
+# Signed webhook: receive reviews from external platforms
+# --------------------------------------------------
+
+@app.route("/api/webhooks/reviews", methods=["POST"])
+def receive_reviews_webhook():
+    webhook_secret = os.getenv("VIBECHECK_WEBHOOK_SECRET")
+
+    if not webhook_secret:
+        return {"error": "Webhook integration is not configured."}, 503
+
+    signature = request.headers.get("X-VibeCheck-Signature", "")
+    expected_signature = "sha256=" + hmac.new(
+        webhook_secret.encode("utf-8"),
+        request.get_data(),
+        hashlib.sha256,
+    ).hexdigest()
+
+    if not hmac.compare_digest(signature, expected_signature):
+        return {"error": "Invalid webhook signature."}, 401
+
+    payload = request.get_json(silent=True)
+
+    if not isinstance(payload, dict):
+        return {"error": "Request body must be a JSON object."}, 400
+
+    incoming_reviews = payload.get("reviews")
+    if incoming_reviews is None and "review" in payload:
+        incoming_reviews = [payload["review"]]
+
+    if not isinstance(incoming_reviews, list) or not incoming_reviews:
+        return {"error": "Provide a non-empty 'reviews' list or a 'review' object."}, 400
+
+    if len(incoming_reviews) > 100:
+        return {"error": "A maximum of 100 reviews can be sent per request."}, 413
+
+    existing_reviews = load_reviews()
+    existing_ids = {
+        str(review.get("id"))
+        for review in existing_reviews
+        if review.get("id") is not None
+    }
+
+    accepted = []
+    rejected = []
+
+    for index, review in enumerate(incoming_reviews):
+        result = validate_review(review, existing_ids)
+
+        if result["valid"]:
+            accepted.append(review)
+            existing_ids.add(review["id"].strip())
+        else:
+            rejected.append({
+                "index": index,
+                "id": review.get("id") if isinstance(review, dict) else None,
+                "errors": result["errors"],
+            })
+
+    saved = add_reviews(accepted) if accepted else {
+        "added": 0,
+        "total_reviews": len(existing_reviews),
+    }
+
+    return {
+        "status": "received",
+        "accepted": saved["added"],
+        "rejected": rejected,
+        "total_reviews": saved["total_reviews"],
+        "message": "Reviews received. Run AI analysis to include them in sentiment monitoring.",
+    }, 202
+
+
+# --------------------------------------------------
+# Live dashboard data
+# --------------------------------------------------
+
+@app.route("/api/monitoring/dashboard")
+def monitoring_dashboard_data():
+    reviews = load_reviews()
+    analyses = load_analyses()
+    report = build_intelligence_report(reviews, analyses)
+    command_centre = build_command_centre_data(reviews, analyses, report)
+
+    monitoring_html = render_template(
+        "_monitoring_panels.html",
+        report=report,
+        command_centre=command_centre,
+    )
+
+    return {
+        "total_reviews": len(reviews),
+        "total_analyses": len(analyses),
+        "unanalyzed_reviews": report.get("unanalyzed_reviews", 0),
+        "festival_count": len(get_festival_names(reviews)),
+        "monitoring_html": monitoring_html,
+    }
+
 
 @app.route("/health")
 def health_check():
