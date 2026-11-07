@@ -1,119 +1,91 @@
 {% extends "base.html" %}
 
-{% block title %}Overview · VibeCheck AI{% endblock %}
+{% block title %}Command Centre · VibeCheck AI{% endblock %}
+{% block topbar_label %}Overview{% endblock %}
 
 {% block content %}
-
-<section class="page-heading">
-
+<section class="page-heading command-heading">
     <div>
-        <p class="eyebrow">YOUR FESTIVAL CONTROL ROOM</p>
-
-        <h1>
-            Festival intelligence,
-            <em>at a glance.</em>
-        </h1>
-
-        <p class="muted">
-            Understand what attendees love, what frustrates them,
-            and where to improve.
-        </p>
+        <p class="eyebrow">COMMAND CENTRE / OVERVIEW</p>
+        <h1>Festival intelligence.<br><em>One clear signal.</em></h1>
+        <p class="muted">A live view of attendee feedback, emerging sentiment and the intelligence available to your team.</p>
     </div>
-
-    <a class="button" href="{{ url_for('import_page') }}">
-        + Import reviews
-    </a>
-
+    <a class="button" href="{{ url_for('import_page') }}">＋ Import feedback</a>
 </section>
 
+<section class="command-banner">
+    <div class="command-banner-copy">
+        <span class="banner-label"><i></i> VIBECHECK INTELLIGENCE ENGINE</span>
+        <h2>Turn the crowd's voice<br>into your next move.</h2>
+        <p>Explore feedback patterns, investigate attendee concerns and make decisions grounded in real festival experiences.</p>
+        <a class="banner-link" href="{{ url_for('chat_page') }}">Talk to your festival data <b>↗</b></a>
+    </div>
+    <div class="command-visual" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div>
+        <div class="core-glow"></div><div class="core-symbol">V</div>
+        <span class="orbit-node node-one"></span><span class="orbit-node node-two"></span><span class="orbit-node node-three"></span>
+        <span class="visual-caption">FEEDBACK<br>INTELLIGENCE</span>
+    </div>
+    <div class="banner-index">01 <span>/ 07</span></div>
+</section>
 
-<section class="metric-grid">
-
-    <article class="metric-card">
-        <span>Total reviews</span>
+<section class="metric-grid command-metrics">
+    <article class="metric-card metric-violet">
+        <div class="metric-topline"><span>FEEDBACK VOLUME</span><i>◉</i></div>
         <strong>{{ total_reviews }}</strong>
-        <small>Imported feedback records</small>
+        <small>Total imported review records</small>
     </article>
-
-    <article class="metric-card">
-        <span>AI analyses</span>
+    <article class="metric-card metric-cyan">
+        <div class="metric-topline"><span>AI PROCESSED</span><i>✳</i></div>
         <strong>{{ total_analyses }}</strong>
-        <small>Saved review analyses</small>
+        <small>Reviews with saved AI analysis</small>
     </article>
-
-    <article class="metric-card">
-        <span>Festivals tracked</span>
+    <article class="metric-card metric-blue">
+        <div class="metric-topline"><span>FESTIVALS TRACKED</span><i>⌁</i></div>
         <strong>{{ festivals|length }}</strong>
-        <small>Unique event names</small>
+        <small>Unique event names in your data</small>
     </article>
-
-    <article class="metric-card">
-        <span>Awaiting analysis</span>
+    <article class="metric-card metric-amber">
+        <div class="metric-topline"><span>AWAITING ANALYSIS</span><i>◷</i></div>
         <strong>{{ report.get('unanalyzed_reviews', 0) }}</strong>
-        <small>Reviews not yet analysed</small>
+        <small>Feedback still to be processed</small>
     </article>
-
 </section>
 
-
-<section class="content-grid">
-
-    <article class="panel">
-
-        <p class="eyebrow">CUSTOMER EXPERIENCE</p>
-
-        <h2>Sentiment snapshot</h2>
-
+<section class="content-grid command-content-grid">
+    <article class="panel sentiment-panel">
+        <div class="panel-heading-row">
+            <div><p class="eyebrow">ATTENDEE MOOD</p><h2>Sentiment distribution</h2></div>
+            <span class="panel-tag">SAVED AI ANALYSES</span>
+        </div>
         {% set counts = report.get('sentiment_counts', {}) %}
-
-        <div class="sentiment-list">
-
-            {% for label in ['positive', 'neutral', 'negative'] %}
-
-                <div class="sentiment-row">
-                    <span>{{ label|title }}</span>
-                    <strong>{{ counts.get(label, 0) }}</strong>
+        {% set total_sentiment = counts.get('positive', 0) + counts.get('neutral', 0) + counts.get('negative', 0) %}
+        <div class="sentiment-total"><strong>{{ total_sentiment }}</strong><span>analysed signals</span></div>
+        <div class="sentiment-bars">
+            {% for label, colour in [('positive', 'green'), ('neutral', 'blue'), ('negative', 'pink')] %}
+                {% set value = counts.get(label, 0) %}
+                {% set width = (value / total_sentiment * 100) if total_sentiment else 0 %}
+                <div class="sentiment-bar-row">
+                    <div class="bar-label"><span class="bar-dot {{ colour }}"></span>{{ label|title }}<strong>{{ value }}</strong></div>
+                    <div class="bar-track"><span class="bar-fill {{ colour }}" style="width: {{ width }}%"></span></div>
                 </div>
-
             {% endfor %}
-
         </div>
-
-        <p class="muted small">
-            Based on completed AI analyses.
-        </p>
-
+        <p class="muted small sentiment-footnote">Sentiment is calculated from completed AI analyses only.</p>
     </article>
 
-
-    <article class="panel">
-
-        <p class="eyebrow">QUICK ACTIONS</p>
-
-        <h2>What would you like to do?</h2>
-
-        <div class="action-list">
-
-            <a href="{{ url_for('analysis_page') }}">
-                Analyse attendee feedback <b>→</b>
-            </a>
-
-            <a href="{{ url_for('reports_page') }}">
-                Generate intelligence report <b>→</b>
-            </a>
-
-            <a href="{{ url_for('compare_page') }}">
-                Compare festival experiences <b>→</b>
-            </a>
-
-            <a href="{{ url_for('chat_page') }}">
-                Ask questions about reviews <b>→</b>
-            </a>
-
-        </div>
-
+    <article class="panel actions-panel">
+        <div class="panel-heading-row"><div><p class="eyebrow">MISSION CONTROL</p><h2>Choose your next action</h2></div><span class="action-spark">✳</span></div>
+        <a class="command-action" href="{{ url_for('analysis_page') }}"><span class="action-icon violet">✳</span><span><strong>Analyse attendee feedback</strong><small>Run AI intelligence on imported reviews</small></span><b>↗</b></a>
+        <a class="command-action" href="{{ url_for('reports_page') }}"><span class="action-icon cyan">▥</span><span><strong>Open intelligence reports</strong><small>Explore patterns and management insights</small></span><b>↗</b></a>
+        <a class="command-action" href="{{ url_for('compare_page') }}"><span class="action-icon blue">⇄</span><span><strong>Compare festival experiences</strong><small>Evaluate feedback across events</small></span><b>↗</b></a>
+        <a class="command-action" href="{{ url_for('chat_page') }}"><span class="action-icon pink">⌘</span><span><strong>Ask VibeCheck AI</strong><small>Ask questions grounded in your data</small></span><b>↗</b></a>
     </article>
-
 </section>
 
+<section class="panel data-readiness">
+    <div class="readiness-icon">⌁</div>
+    <div class="readiness-copy"><p class="eyebrow">INTELLIGENCE READINESS</p><h2>Your data is the signal.</h2><p class="muted">Import attendee reviews to expand the evidence base, then run AI analysis to unlock deeper festival insights.</p></div>
+    <a class="button secondary" href="{{ url_for('reviews_page') }}">Explore reviews <span>→</span></a>
+</section>
 {% endblock %}
