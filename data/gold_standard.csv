@@ -1,0 +1,13 @@
+id,event,text,expected_sentiment,expected_emotions,expected_topics,expected_complaint_detected,expected_complaint_category
+G001,Food and Sound Fest,"The food was delicious and the vendors served everyone quickly",positive,"joy|satisfaction","Food Quality|Service Speed",false,
+G002,Campus Music Festival,"The live band delivered an outstanding performance and the crowd loved every moment",positive,"excitement|joy","Live Music|Crowd Experience",false,
+G003,Food and Sound Fest,"The security officers were polite and made us feel safe throughout the event",positive,"gratitude|relief","Security|Staff Conduct",false,
+G004,Campus Music Festival,"The venue was clean, comfortable and well organised",positive,"satisfaction|contentment","Venue Cleanliness|Organisation",false,
+G005,Food and Sound Fest,"The food queues were extremely long and many visitors waited over an hour",negative,"frustration|disappointment","Food Service|Waiting Time",true,"Food & Catering"
+G006,Campus Music Festival,"The tickets were ridiculously expensive for the experience provided",negative,"disappointment|frustration","Ticket Pricing|Value for Money",true,"Ticket Pricing"
+G007,Food and Sound Fest,"The staff were rude and refused to help when I asked for directions",negative,"anger|frustration","Staff Conduct|Customer Service",true,"Staff & Customer Service"
+G008,Campus Music Festival,"There was nowhere to park and visitors had to leave their cars far away",negative,"frustration|disappointment","Parking|Transport",true,"Parking & Transport"
+G009,Food and Sound Fest,"The speakers kept producing distorted sounds and the music was difficult to enjoy",negative,"annoyance|disappointment","Sound Quality|Audio Equipment",true,"Sound & Production"
+G010,Campus Music Festival,"The security checks were poorly managed and people pushed through the entrance",negative,"concern|frustration","Security|Crowd Management",true,"Security & Safety"
+G011,Food and Sound Fest,"The festival started at the advertised time and followed the published schedule",neutral,"neutral","Event Timing|Organisation",false,
+G012,Campus Music Festival,"There were several food vendors and different meal options available",neutral,"neutral","Food Variety|Food Vendors",false,

@@ -1,0 +1,217 @@
+[
+    {
+        "review_id": "R001",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "positive",
+            "emotions": [
+                "excited",
+                "satisfied"
+            ],
+            "topics": [
+                "music",
+                "crowd"
+            ],
+            "complaint_detected": false,
+            "complaint_summary": "",
+            "recommendation": "Maintain the current music curation and crowd management strategies for future events.",
+            "summary": "The customer had a great experience, specifically highlighting the high-quality music and the energetic atmosphere."
+        }
+    },
+    {
+        "review_id": "R002",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "negative",
+            "emotions": [
+                "frustrated"
+            ],
+            "topics": [
+                "food",
+                "queues"
+            ],
+            "complaint_detected": true,
+            "complaint_summary": "Excessive wait times for food service.",
+            "recommendation": "Implement a mobile ordering system or increase the number of food vendors to reduce queue lengths.",
+            "summary": "The customer had a negative experience due to long and frustrating food queues."
+        }
+    },
+    {
+        "review_id": "R003",
+        "event": "Campus Music Festival",
+        "analysis": {
+            "sentiment": "positive",
+            "emotions": [
+                "satisfied"
+            ],
+            "topics": [
+                "sound quality"
+            ],
+            "complaint_detected": false,
+            "complaint_summary": "",
+            "recommendation": "Maintain current audio engineering standards for future events.",
+            "summary": "The customer was highly satisfied with the excellent sound quality at the Campus Music Festival."
+        }
+    },
+    {
+        "review_id": "R004",
+        "event": "Campus Music Festival",
+        "analysis": {
+            "sentiment": "negative",
+            "emotions": [
+                "dissatisfied"
+            ],
+            "topics": [
+                "pricing"
+            ],
+            "complaint_detected": true,
+            "complaint_summary": "The customer feels the ticket prices were too high.",
+            "recommendation": "Review pricing strategy or offer early-bird discounts to improve perceived value.",
+            "summary": "The customer expressed dissatisfaction regarding the high cost of festival tickets."
+        }
+    },
+    {
+        "review_id": "R005",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "positive",
+            "emotions": [
+                "satisfied"
+            ],
+            "topics": [
+                "security"
+            ],
+            "complaint_detected": false,
+            "complaint_summary": "",
+            "recommendation": "Maintain current security training and staffing levels as they are performing well.",
+            "summary": "The customer had a positive experience with the security team at Food and Sound Fest."
+        }
+    },
+    {
+        "review_id": "R006",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "positive",
+            "emotions": [
+                "satisfied"
+            ],
+            "topics": [
+                "venue",
+                "cleanliness",
+                "comfort"
+            ],
+            "complaint_detected": false,
+            "complaint_summary": "",
+            "recommendation": "Maintain current cleaning and facility management standards for future events.",
+            "summary": "The customer found the festival venue to be clean and comfortable."
+        }
+    },
+    {
+        "review_id": "R007",
+        "event": "Campus Music Festival",
+        "analysis": {
+            "sentiment": "neutral",
+            "emotions": [
+                "satisfied",
+                "disappointed"
+            ],
+            "topics": [
+                "music",
+                "food"
+            ],
+            "complaint_detected": true,
+            "complaint_summary": "The food quality was disappointing.",
+            "recommendation": "Review food vendor quality and variety to ensure it matches the high standard of the music entertainment.",
+            "summary": "The customer enjoyed the DJ performance but was dissatisfied with the food options."
+        }
+    },
+    {
+        "review_id": "R008",
+        "event": "Campus Music Festival",
+        "analysis": {
+            "sentiment": "negative",
+            "emotions": [
+                "frustration",
+                "dissatisfaction"
+            ],
+            "topics": [
+                "staff",
+                "customer service"
+            ],
+            "complaint_detected": true,
+            "complaint_summary": "The festival staff were perceived as rude and unhelpful.",
+            "recommendation": "Implement customer service training workshops for all festival staff to improve interpersonal interactions.",
+            "summary": "The customer had a poor experience due to unprofessional and unhelpful staff behavior."
+        }
+    },
+    {
+        "review_id": "R009",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "positive",
+            "emotions": [
+                "enjoyment"
+            ],
+            "topics": [
+                "general experience"
+            ],
+            "complaint_detected": false,
+            "complaint_summary": "",
+            "recommendation": "Continue maintaining the current festival atmosphere and quality of experience.",
+            "summary": "The customer had a positive experience at the Food and Sound Fest."
+        }
+    },
+    {
+        "review_id": "R010",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "negative",
+            "emotions": [
+                "frustration"
+            ],
+            "topics": [
+                "parking"
+            ],
+            "complaint_detected": true,
+            "complaint_summary": "The parking arrangement was poorly organized.",
+            "recommendation": "Improve parking signage, increase staff presence, or implement a pre-booked parking system.",
+            "summary": "The customer had a negative experience due to the festival's parking arrangements."
+        }
+    },
+    {
+        "review_id": "R011",
+        "event": "Food and Sound Fest",
+        "analysis": {
+            "sentiment": "positive",
+            "emotions": [
+                "satisfied"
+            ],
+            "topics": [
+                "food quality",
+                "pricing"
+            ],
+            "complaint_detected": false,
+            "complaint_summary": "",
+            "recommendation": "Maintain the current variety and pricing strategy for future events.",
+            "summary": "The customer was pleased with the diverse and reasonably priced food options available at the festival."
+        }
+    },
+    {
+        "review_id": "R012",
+        "event": "Campus Music Festival",
+        "analysis": {
+            "sentiment": "negative",
+            "emotions": [
+                "discomfort"
+            ],
+            "topics": [
+                "sound quality",
+                "volume"
+            ],
+            "complaint_detected": true,
+            "complaint_summary": "The sound volume was excessively loud, causing physical discomfort.",
+            "recommendation": "Implement sound level monitoring and ensure audio output remains within safe, comfortable decibel limits for attendees.",
+            "summary": "The attendee found the festival's sound levels uncomfortably loud."
+        }
+    }
+]

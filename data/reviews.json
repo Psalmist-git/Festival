@@ -58,5 +58,125 @@
         "event": "Food and Sound Fest",
         "text": "The parking arrangement was terrible",
         "created_at": "2026-01-19"
+    },
+    {
+        "id": "R011",
+        "event": "Food and Sound Fest",
+        "text": "The food vendors offered a good variety of meals at reasonable prices",
+        "created_at": "2026-01-20"
+    },
+    {
+        "id": "R012",
+        "event": "Campus Music Festival",
+        "text": "The speakers were too loud and the sound became uncomfortable",
+        "created_at": "2026-01-20"
+    },
+    {
+        "id": "R013",
+        "event": "Food and Sound Fest",
+        "text": "The toilets were poorly maintained throughout the event",
+        "created_at": "2026-01-21"
+    },
+    {
+        "id": "R014",
+        "event": "Campus Music Festival",
+        "text": "The live performances were entertaining and professionally organised",
+        "created_at": "2026-01-21"
+    },
+    {
+        "id": "R015",
+        "event": "Food and Sound Fest",
+        "text": "Security checks were organised and the entrance process was smooth",
+        "created_at": "2026-01-22"
+    },
+    {
+        "id": "R016",
+        "event": "Campus Music Festival",
+        "text": "I waited almost an hour before getting my food",
+        "created_at": "2026-01-22"
+    },
+    {
+        "id": "R017",
+        "event": "Food and Sound Fest",
+        "text": "There were not enough parking spaces for visitors",
+        "created_at": "2026-01-23"
+    },
+    {
+        "id": "R018",
+        "event": "Campus Music Festival",
+        "text": "The event staff were friendly and helped me find my seat",
+        "created_at": "2026-01-23"
+    },
+    {
+        "id": "R019",
+        "event": "Food and Sound Fest",
+        "text": "The ticket price was fair considering the activities available",
+        "created_at": "2026-01-24"
+    },
+    {
+        "id": "R020",
+        "event": "Campus Music Festival",
+        "text": "The festival started later than the advertised time",
+        "created_at": "2026-01-24"
+    },
+    {
+        "id": "R021",
+        "event": "Food and Sound Fest",
+        "text": "The stage lighting and visual effects made the performances enjoyable",
+        "created_at": "2026-01-25"
+    },
+    {
+        "id": "R022",
+        "event": "Campus Music Festival",
+        "text": "The drinking water stations were insufficient for the crowd",
+        "created_at": "2026-01-25"
+    },
+    {
+        "id": "R023",
+        "event": "Food and Sound Fest",
+        "text": "The crowd management was poor and movement around the venue was difficult",
+        "created_at": "2026-01-26"
+    },
+    {
+        "id": "R024",
+        "event": "Campus Music Festival",
+        "text": "The ticket registration process was quick and convenient",
+        "created_at": "2026-01-26"
+    },
+    {
+        "id": "R025",
+        "event": "Food and Sound Fest",
+        "text": "The performers were excellent but the sound system had occasional interruptions",
+        "created_at": "2026-01-27"
+    },
+    {
+        "id": "R026",
+        "event": "Campus Music Festival",
+        "text": "The venue was clean and there were enough seating areas",
+        "created_at": "2026-01-27"
+    },
+    {
+        "id": "R027",
+        "event": "Food and Sound Fest",
+        "text": "The prices of food and drinks were higher than expected",
+        "created_at": "2026-01-28"
+    },
+    {
+        "id": "R028",
+        "event": "Campus Music Festival",
+        "text": "The security personnel handled an emergency situation professionally",
+        "created_at": "2026-01-28"
+    },
+    {
+        "id": "R029",
+        "event": "Food and Sound Fest",
+        "text": "The event was average and met most of my expectations",
+        "created_at": "2026-01-29"
+    },
+    {
+        "id": "R030",
+        "event": "Campus Music Festival",
+        "text": "The transport arrangements after the event were confusing and poorly organised",
+        "created_at": "2026-01-29"
     }
 ]
